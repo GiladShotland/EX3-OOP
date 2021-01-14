@@ -88,6 +88,8 @@ class GraphAlgo(GraphAlgoInterface):
             return float('inf'), []
         if id1 not in self.get_graph().get_all_v() or id2 not in self.get_graph().get_all_v():
             return float('inf'), []
+        if id1 == id2:
+            return (0,[id1])
         destination_node = self.get_graph().get_all_v().get(id2)
         source_node = self.get_graph().get_all_v().get(id1)
         predecessors = self.dijkstra_algorithm(source_node)
