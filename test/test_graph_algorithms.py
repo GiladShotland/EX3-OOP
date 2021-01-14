@@ -66,8 +66,29 @@ class TestGraphAlgorithms(unittest.TestCase):
         for number in range(9):
             self.assertNotEqual(float('inf'), algo.shortest_path(number, number + 1)[0])
         self.assertEqual(10, algo.shortest_path(1, 3)[0])
-        graph.remove_edge(0,3)
-        self.assertEqual(float('inf'),algo.shortest_path(1,3)[0])
-        path = [4,0,2]
-        path2 = algo.shortest_path(4,2)[1]
-        self.assertTrue(path.__eq__(algo.shortest_path(4,2)[1]))
+        graph.remove_edge(0, 3)
+        self.assertEqual(float('inf'), algo.shortest_path(1, 3)[0])
+        path = [4, 0, 2]
+        path2 = algo.shortest_path(4, 2)[1]
+        self.assertTrue(path.__eq__(algo.shortest_path(4, 2)[1]))
+        expected = (0, [0])
+
+        self.assertEqual(algo.shortest_path(0, 0), expected)
+
+    def test_plot(self):
+        graph = Graph()
+        graph2 = Graph()
+        for number in range(3):
+            graph.add_node(number, (number, number, number))
+            graph2.add_node(number, (number, number, number))
+        graph.add_edge(0, 1, 1)
+        graph2.add_edge(0, 1, 1)
+        graph.add_edge(1, 2, 1)
+        graph2.add_edge(1, 2, 1)
+        graph.add_edge(2, 0, 1)
+        graph2.add_edge(2, 0, 1)
+        self.assertEqual(graph, graph2)
+        algo = Algo(graph)
+        algo.plot_graph()
+        x = 5
+        self.assertEqual(graph, graph2)
