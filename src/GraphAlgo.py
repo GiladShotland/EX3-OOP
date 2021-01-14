@@ -144,36 +144,37 @@ class GraphAlgo(GraphAlgoInterface):
         Otherwise, they will be placed in a random but elegant manner.
         @return: None
         """
-        nodes_list = self.get_graph().get_all_v()
-        no_positions = self.get_empty_pos_nodes()
-        self.generate_positions(no_positions)
-        dx = self.get_differentialx(nodes_list)
-        extend_x = (dx[0] - dx[1]) / 10
-        dy = self.get_differentialy(nodes_list)
-        extend_y = (dy[0] - dy[1]) / 10
-        plt.axis([dx[0] - extend_x * 12, dx[1] + extend_x * 12, dy[0] - extend_y * 12, dy[1] + extend_y * 12])
+        if self.get_graph() is not None:
+            nodes_list = self.get_graph().get_all_v()
+            no_positions = self.get_empty_pos_nodes()
+            self.generate_positions(no_positions)
+            dx = self.get_differentialx(nodes_list)
+            extend_x = (dx[0] - dx[1]) / 10
+            dy = self.get_differentialy(nodes_list)
+            extend_y = (dy[0] - dy[1]) / 10
+            plt.axis([dx[0] - extend_x * 12, dx[1] + extend_x * 12, dy[0] - extend_y * 12, dy[1] + extend_y * 12])
 
-        for node_id in nodes_list:
-            node = nodes_list.get(node_id)
-            pos = node.pos
+            for node_id in nodes_list:
+                node = nodes_list.get(node_id)
+                pos = node.pos
 
-            plt.plot(pos[0], pos[1], 'bo')
-            plt.annotate(text=f"{node.key}", xy=(pos[0] + 0.0002, pos[1] + 0.0002),
-                         xytext=(pos[0] - 0.0002, pos[1] + 0.0002), color='darkcyan')
+                plt.plot(pos[0], pos[1], 'bo')
+                plt.annotate(text=f"{node.key}", xy=(pos[0] + 0.0002, pos[1] + 0.0002),
+                             xytext=(pos[0] - 0.0002, pos[1] + 0.0002), color='darkcyan')
 
-        for node_id in nodes_list:
-            node = nodes_list.get(node_id)
-            pos = node.pos
+            for node_id in nodes_list:
+                node = nodes_list.get(node_id)
+                pos = node.pos
 
-            for neighbor_id in node.out_edges:
-                neighbor = nodes_list.get(neighbor_id)
-                neigh_pos = neighbor.pos
-                distance = self.distance(pos,neigh_pos)
-                length = min([distance/10,0.001])
-                plt.annotate("", xy=(neigh_pos[0], neigh_pos[1]), xytext=(node.pos[0], node.pos[1]),
-                             arrowprops=dict(edgecolor='green', facecolor='black', arrowstyle='-|>'))
+                for neighbor_id in node.out_edges:
+                    neighbor = nodes_list.get(neighbor_id)
+                    neigh_pos = neighbor.pos
+                    distance = self.distance(pos,neigh_pos)
+                    length = min([distance/10,0.001])
+                    plt.annotate("", xy=(neigh_pos[0], neigh_pos[1]), xytext=(node.pos[0], node.pos[1]),
+                                 arrowprops=dict(edgecolor='green', facecolor='black', arrowstyle='-|>'))
 
-        plt.show()
+            plt.show()
 
     def dijkstra_algorithm(self, source):
         """
